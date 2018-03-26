@@ -10,7 +10,7 @@
                     <div class="col-md-6">
                         <label for="courseID" class="control-label"><span class="text-danger">*</span>Course</label>
                         <div class="form-group">
-                            <select name="courseID" class="form-control">
+                            <select name="courseID" class="form-control" disabled>
                                 <option value="">Select Course...</option>
                                 <?php
                                 $course_values = array(
@@ -83,63 +83,63 @@
                     <div class="col-md-6">
                         <label for="apfn" class="control-label"><span class="text-danger">*</span>First Name</label>
                         <div class="form-group">
-                            <input type="text" name="apfn" value="<?php echo ($this->input->post('apfn') ? $this->input->post('apfn') : $applicant['apfn']); ?>" class="form-control" id="apfn" />
+                            <input type="text" name="apfn" value="<?php echo ($this->input->post('apfn') ? $this->input->post('apfn') : $applicant['apfn']); ?>" class="form-control" id="apfn" disabled/>
                             <span class="text-danger"><?php echo form_error('apfn');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="apln" class="control-label"><span class="text-danger">*</span>Last Name</label>
                         <div class="form-group">
-                            <input type="text" name="apln" value="<?php echo ($this->input->post('apln') ? $this->input->post('apln') : $applicant['apln']); ?>" class="form-control" id="apln" />
+                            <input type="text" name="apln" value="<?php echo ($this->input->post('apln') ? $this->input->post('apln') : $applicant['apln']); ?>" class="form-control" id="apln" disabled/>
                             <span class="text-danger"><?php echo form_error('apln');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="apmn" class="control-label"><span class="text-danger">*</span>Middle Name</label>
                         <div class="form-group">
-                            <input type="text" name="apmn" value="<?php echo ($this->input->post('apmn') ? $this->input->post('apmn') : $applicant['apmn']); ?>" class="form-control" id="apmn" />
+                            <input type="text" name="apmn" value="<?php echo ($this->input->post('apmn') ? $this->input->post('apmn') : $applicant['apmn']); ?>" class="form-control" id="apmn" disabled/>
                             <span class="text-danger"><?php echo form_error('apmn');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="control-label"><span class="text-danger">*</span>Email Address</label>
                         <div class="form-group">
-                            <input type="text" name="email" value="<?php echo ($this->input->post('email') ? $this->input->post('email') : $applicant['email']); ?>" class="form-control" id="email" />
+                            <input type="text" name="email" value="<?php echo ($this->input->post('email') ? $this->input->post('email') : $applicant['email']); ?>" class="form-control" id="email" disabled/>
                             <span class="text-danger"><?php echo form_error('email');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="mobile" class="control-label"><span class="text-danger">*</span>Mobile No</label>
                         <div class="form-group">
-                            <input type="text" name="mobile" value="<?php echo ($this->input->post('mobile') ? $this->input->post('mobile') : $applicant['mobile']); ?>" data-inputmask='"mask": "(0999)999-9999"' class="form-control" id="mobile" data-mask required/>
+                            <input type="text" name="mobile" value="<?php echo ($this->input->post('mobile') ? $this->input->post('mobile') : $applicant['mobile']); ?>" data-inputmask='"mask": "(0999)999-9999"' class="form-control" id="mobile" data-mask disabled/>
                             <span class="text-danger"><?php echo form_error('mobile');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="birthdate" class="control-label"><span class="text-danger">*</span>Birth Date</label>
                         <div class="form-group">
-                            <input type="date" name="birthdate" value="<?php echo ($this->input->post('birthdate') ? $this->input->post('birthdate') : $applicant['birthdate']); ?>" class="date form-control" id="birthdate" />
+                            <input type="date" name="birthdate" value="<?php echo ($this->input->post('birthdate') ? $this->input->post('birthdate') : $applicant['birthdate']); ?>" class="date form-control" id="birthdate" disabled/>
                             <span class="text-danger"><?php echo form_error('birthdate');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="age" class="control-label"><span class="text-danger">*</span>Age</label>
                         <div class="form-group">
-                            <input type="text" name="age" value="<?php echo ($this->input->post('age') ? $this->input->post('age') : $applicant['age']); ?>" class="form-control" id="age" />
+                            <input type="text" name="age" value="<?php echo ($this->input->post('age') ? $this->input->post('age') : $applicant['age']); ?>" class="form-control" id="age" disabled/>
                             <span class="text-danger"><?php echo form_error('age');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="birthplace" class="control-label"><span class="text-danger">*</span>Birthplace</label>
                         <div class="form-group">
-                            <input type="text" name="birthplace" value="<?php echo ($this->input->post('birthplace') ? $this->input->post('birthplace') : $applicant['birthplace']); ?>" class="form-control" id="birthplace" />
+                            <input type="text" name="birthplace" value="<?php echo ($this->input->post('birthplace') ? $this->input->post('birthplace') : $applicant['birthplace']); ?>" class="form-control" id="birthplace" disabled/>
                             <span class="text-danger"><?php echo form_error('birthplace');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="gender" class="control-label"><span class="text-danger">*</span>Gender</label>
                         <div class="form-group">
-                        <select name="gender" class="form-control">
+                        <select name="gender" class="form-control" disabled>
                         <option value="">Select Gender...</option>
                                 <?php
                                 $gender_values = array(
@@ -161,7 +161,7 @@
                         <label for="civstat" class="control-label"><span class="text-danger">*</span>Civil Status</label>
                         <div class="form-group">
                         
-                        <select name="civstat" class="form-control">
+                        <select name="civstat" class="form-control" disabled>
                                 <option value="">Select Status...</option>
                                 <?php
                                 $civstat_values = array(
@@ -184,8 +184,8 @@
                     <div class="col-md-6">
                         <label for="nationality" class="control-label"><span class="text-danger">*</span>Nationality</label>
                         <div class="form-group">
-                        <select name="nationality" class="form-control">
-                                <option value="">Select Gender...</option>
+                        <select name="nationality" class="form-control" disabled>
+                                <option value="">Select Nationality...</option>
                                 <?php
                                 $nationality_values= array(
                                     'Filipino'=>'Filipino',
@@ -206,91 +206,91 @@
                     <div class="col-md-6">
                         <label for="religion" class="control-label"><span class="text-danger">*</span>Religion</label>
                         <div class="form-group">
-                            <input type="text" name="religion" value="<?php echo ($this->input->post('religion') ? $this->input->post('religion') : $applicant['religion']); ?>" class="form-control" id="religion" />
+                            <input type="text" name="religion" value="<?php echo ($this->input->post('religion') ? $this->input->post('religion') : $applicant['religion']); ?>" class="form-control" id="religion" disabled/>
                             <span class="text-danger"><?php echo form_error('religion');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="addcity" class="control-label"><span class="text-danger">*</span>City Address</label>
                         <div class="form-group">
-                            <input type="text" name="addcity" value="<?php echo ($this->input->post('addcity') ? $this->input->post('addcity') : $applicant['addcity']); ?>" class="form-control" id="addcity" />
+                            <input type="text" name="addcity" value="<?php echo ($this->input->post('addcity') ? $this->input->post('addcity') : $applicant['addcity']); ?>" class="form-control" id="addcity" disabled/>
                             <span class="text-danger"><?php echo form_error('addcity');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="addprov" class="control-label"><span class="text-danger"></span>Provincial Address</label>
                         <div class="form-group">
-                            <input type="text" name="addprov" value="<?php echo ($this->input->post('addprov') ? $this->input->post('addprov') : $applicant['addprov']); ?>" class="form-control" id="addprov" />
+                            <input type="text" name="addprov" value="<?php echo ($this->input->post('addprov') ? $this->input->post('addprov') : $applicant['addprov']); ?>" class="form-control" id="addprov" disabled/>
                             <span class="text-danger"><?php echo form_error('addprov');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="elemschool" class="control-label"><span class="text-danger">*</span>Elementary School</label>
                         <div class="form-group">
-                            <input type="text" name="elemschool" value="<?php echo ($this->input->post('elemschool') ? $this->input->post('elemschool') : $applicant['elemschool']); ?>" class="form-control" id="elemschool" />
+                            <input type="text" name="elemschool" value="<?php echo ($this->input->post('elemschool') ? $this->input->post('elemschool') : $applicant['elemschool']); ?>" class="form-control" id="elemschool" disabled/>
                             <span class="text-danger"><?php echo form_error('elemschool');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="secschool" class="control-label"><span class="text-danger">*</span>Secondary School</label>
                         <div class="form-group">
-                            <input type="text" name="secschool" value="<?php echo ($this->input->post('secschool') ? $this->input->post('secschool') : $applicant['secschool']); ?>" class="form-control" id="secschool" />
+                            <input type="text" name="secschool" value="<?php echo ($this->input->post('secschool') ? $this->input->post('secschool') : $applicant['secschool']); ?>" class="form-control" id="secschool" disabled/>
                             <span class="text-danger"><?php echo form_error('secschool');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="tertschool" class="control-label"><span class="text-danger">*</span>Tertiary School</label>
                         <div class="form-group">
-                            <input type="text" name="tertschool" value="<?php echo ($this->input->post('tertschool') ? $this->input->post('tertschool') : $applicant['tertschool']); ?>" class="form-control" id="tertschool" />
+                            <input type="text" name="tertschool" value="<?php echo ($this->input->post('tertschool') ? $this->input->post('tertschool') : $applicant['tertschool']); ?>" class="form-control" id="tertschool" disabled/>
                             <span class="text-danger"><?php echo form_error('tertschool');?></span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="reasonleave" class="control-label"><span class="text-danger">*</span>Reason for Leaving</label>
                         <div class="form-group">
-                            <textarea name="reasonleave" class="form-control" id="reasonleave"><?php echo ($this->input->post('reasonleave') ? $this->input->post('reasonleave') : $applicant['reasonleave']); ?></textarea>
+                            <textarea name="reasonleave" class="form-control" id="reasonleave" disabled><?php echo ($this->input->post('reasonleave') ? $this->input->post('reasonleave') : $applicant['reasonleave']); ?></textarea>
                             <span class="text-danger"><?php echo form_error('reasonleave');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="guardianame" class="control-label">Guardian Name</label>
                         <div class="form-group">
-                            <input type="text" name="guardianame" value="<?php echo ($this->input->post('guardianame') ? $this->input->post('guardianame') : $applicant['guardianame']); ?>" class="form-control" id="guardianame" />
+                            <input type="text" name="guardianame" value="<?php echo ($this->input->post('guardianame') ? $this->input->post('guardianame') : $applicant['guardianame']); ?>" class="form-control" id="guardianame" disabled/>
                             <span class="text-danger"><?php echo form_error('guardianame');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="relationship" class="control-label">Relationship</label>
                         <div class="form-group">
-                            <input type="text" name="relationship" value="<?php echo ($this->input->post('relationship') ? $this->input->post('relationship') : $applicant['relationship']); ?>" class="form-control" id="relationship" />
+                            <input type="text" name="relationship" value="<?php echo ($this->input->post('relationship') ? $this->input->post('relationship') : $applicant['relationship']); ?>" class="form-control" id="relationship" disabled />
                             <span class="text-danger"><?php echo form_error('relationship');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="fathername" class="control-label"><span class="text-danger">*</span>Father's Name</label>
                         <div class="form-group">
-                            <input type="text" name="fathername" value="<?php echo ($this->input->post('fathername') ? $this->input->post('fathername') : $applicant['fathername']); ?>" class="form-control" id="fathername" />
+                            <input type="text" name="fathername" value="<?php echo ($this->input->post('fathername') ? $this->input->post('fathername') : $applicant['fathername']); ?>" class="form-control" id="fathername" disabled/>
                             <span class="text-danger"><?php echo form_error('fathername');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="fatherocc" class="control-label"><span class="text-danger">*</span>Father's Occupation</label>
                         <div class="form-group">
-                            <input type="text" name="fatherocc" value="<?php echo ($this->input->post('fatherocc') ? $this->input->post('fatherocc') : $applicant['fatherocc']); ?>" class="form-control" id="fatherocc" />
+                            <input type="text" name="fatherocc" value="<?php echo ($this->input->post('fatherocc') ? $this->input->post('fatherocc') : $applicant['fatherocc']); ?>" class="form-control" id="fatherocc" disabled/>
                             <span class="text-danger"><?php echo form_error('fatherocc');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="mothername" class="control-label"><span class="text-danger">*</span>Mother's Name</label>
                         <div class="form-group">
-                            <input type="text" name="mothername" value="<?php echo ($this->input->post('mothername') ? $this->input->post('mothername') : $applicant['mothername']); ?>" class="form-control" id="mothername" />
+                            <input type="text" name="mothername" value="<?php echo ($this->input->post('mothername') ? $this->input->post('mothername') : $applicant['mothername']); ?>" class="form-control" id="mothername" disabled/>
                             <span class="text-danger"><?php echo form_error('mothername');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="motherocc" class="control-label"><span class="text-danger">*</span>Mother Occupation</label>
                         <div class="form-group">
-                            <input type="text" name="motherocc" value="<?php echo ($this->input->post('motherocc') ? $this->input->post('motherocc') : $applicant['motherocc']); ?>" class="form-control" id="motherocc" />
+                            <input type="text" name="motherocc" value="<?php echo ($this->input->post('motherocc') ? $this->input->post('motherocc') : $applicant['motherocc']); ?>" class="form-control" id="motherocc" disabled/>
                             <span class="text-danger"><?php echo form_error('motherocc');?></span>
                         </div>
                     </div>
@@ -298,7 +298,7 @@
                     <div class="col-md-6" hidden>
                         <label for="datemodified" class="control-label">Datemodified</label>
                         <div class="form-group">
-                            <input type="text" name="datemodified" value="<?php echo ($this->input->post('datemodified') ? $this->input->post('datemodified') : $applicant['datemodified']); ?>" class="has-datetimepicker form-control" id="datemodified" />
+                            <input type="text" name="datemodified" value="<?php echo ($this->input->post('datemodified') ? $this->input->post('datemodified') : $applicant['datemodified']); ?>" class="has-datetimepicker form-control" id="datemodified"/>
                         </div>
                     </div>
                 </div>

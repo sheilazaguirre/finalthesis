@@ -6,6 +6,7 @@ class Applicant extends CI_Controller{
         parent::__construct();
         $this->load->model('Applicant_model');
         $this->load->model('Auditlog_model');
+        $this->load->model('User_model');
 
         if($this->session->userdata('logged_in') == TRUE && $this->session->userdata('userTypeID') == 1)
         {
@@ -36,6 +37,8 @@ class Applicant extends CI_Controller{
      */
     function add()
     {
+        $data['error'] = ""; //age
+		$data['error2'] = ""; //email
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
@@ -75,7 +78,6 @@ class Applicant extends CI_Controller{
             $age = (int)$num;
 
 
-
             $params = array(
                 'courseID' => $this->input->post('courseID'),
                 'studentstat' => $this->input->post('studentstat'),
@@ -108,14 +110,51 @@ class Applicant extends CI_Controller{
                 'reasonleave' => $this->input->post('reasonleave'),
             );
 
-            $applicant_id = $this->Applicant_model->add_applicant($params);
-            $idnum = $this->session->userdata('userIDNo');
-                    $paramsaudit = array(
-                        'userIDNo' => $idnum,
-                        'auditDesc' => 'Added Applicant',
-                    );
-                    $this->Auditlog_model->add_auditlog($paramsaudit);
-            redirect('applicant/index');
+            if ($age >= 14 && $age <39) 
+            {
+                $emailres = $this->Applicant_model->valemail($params);
+					
+					if ($emailres === 2) {				
+                        $applicant_id = $this->Applicant_model->add_applicant($params);
+                        $idnum = $this->session->userdata('userIDNo');
+                                $paramsaudit = array(
+                                    'userIDNo' => $idnum,
+                                    'auditDesc' => 'Added Applicant',
+                                );
+                                $this->Auditlog_model->add_auditlog($paramsaudit);
+                        redirect('applicant/index');
+					}
+					else if ($emailres === 3) {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error2'] = "Email already exist for an applicant";
+                        $data['_view'] = 'applicant/add';
+                        $this->load->view('layouts/main', $data);
+					}
+					else {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error2'] = "Email already exist for a user";
+                        $data['_view'] = 'applicant/add';
+                        $this->load->view('layouts/main', $data);
+					}
+                
+            }
+            else if ($age >= 40) {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too old / Invalid years";
+                $data['_view'] = 'applicant/add';
+                $this->load->view('layouts/main', $data);
+			}
+			else {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too young for college / Invalid years";
+                $data['_view'] = 'applicant/add';
+                $this->load->view('layouts/main', $data);
+			}        
+
         }
         else {
             $data['_view'] = 'applicant/add';

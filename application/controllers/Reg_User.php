@@ -38,6 +38,7 @@ class Reg_User extends CI_Controller{
     {   
 		$data['error'] = "";
 		$data['error2'] = "";
+		$data['error3'] = "";
         $this->load->library('form_validation');
 
 		$this->form_validation->set_rules('userIDNo','UserIDNo','required|integer');
@@ -110,20 +111,39 @@ class Reg_User extends CI_Controller{
 				$valres = $this->User_model->validate($params);
 				if ($valres === 2)
 				{
-					$user_id = $this->User_model->add_user($params);
-					$idnum = $this->session->userdata('userIDNo');
-                        $paramsaudit = array(
-                            'userIDNo' => $idnum,
-                            'auditDesc' => 'Successfully added a user',
-                        );
-					redirect('reg_user/index');
+					$emailres = $this->User_model->valemail($params);
+					
+					if ($emailres === 2) {
+						$user_id = $this->User_model->add_user($params);
+						$idnum = $this->session->userdata('userIDNo');
+							$paramsaudit = array(
+								'userIDNo' => $idnum,
+								'auditDesc' => 'Successfully added a user',
+							);
+							redirect('reg_user/index');
+					}
+					else if ($emailres === 3) {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error3'] = "Email already exist for an applicant";
+						$data['_view'] = 'registrar_page/user/add';
+            	$this->load->view('layouts/reg',$data);
+					}
+					else {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error3'] = "Email already exist for a user";
+						$data['_view'] = 'registrar_page/user/add';
+            	$this->load->view('layouts/reg',$data);
+					}
+					
 				}
 				else {
 					$this->load->model('Usertype_model');
 				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
 				$data['error2'] = "USERID already exist (Check database)";
-           		$data['_view'] = 'registrar_page/user/add';
-            	$this->load->view('layouts/regmain',$data);
+				$data['_view'] = 'registrar_page/user/add';
+            	$this->load->view('layouts/reg',$data);
 				}
 				
 	
@@ -141,7 +161,6 @@ class Reg_User extends CI_Controller{
 				$data['error'] = "Student too young for college / Invalid years";
            		$data['_view'] = 'registrar_page/user/add';
             	$this->load->view('layouts/reg',$data);
-				show_error('Student too young for college');
 			}
 
             

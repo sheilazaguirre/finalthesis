@@ -36,6 +36,8 @@ class Reg_Applicant extends CI_Controller{
      */
     function add()
     {
+        $data['error'] = ""; //age  
+		$data['error2'] = ""; //email
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
@@ -107,15 +109,54 @@ class Reg_Applicant extends CI_Controller{
                 'addprov' => $this->input->post('addprov'),
                 'reasonleave' => $this->input->post('reasonleave'),
             );
+            
+            if ($age >= 14 && $age <39) 
+            {
+                $emailres = $this->Applicant_model->valemail($params);
+					
+					if ($emailres === 2) {
+						$applicant_id = $this->Applicant_model->add_applicant($params);
+                        $idnum = $this->session->userdata('userIDNo');
+                        $paramsaudit = array(
+                            'userIDNo' => $idnum,
+                            'auditDesc' => 'Successfully added a new applicant',
+                        );
+                        $this->Auditlog_model->add_auditlog($paramsaudit);
+                         redirect('reg_applicant/index');
+					}
+					else if ($emailres === 3) {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error2'] = "Email already exist for an applicant";
+						$data['_view'] = 'registrar_page/applicant/add';
+                         $this->load->view('layouts/reg', $data);
+					}
+					else {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error2'] = "Email already exist for a user";
+						$data['_view'] = 'registrar_page/applicant/add';
+                        $this->load->view('layouts/reg', $data);
+					}
+                
+            }
+            else if ($age >= 40) {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too old / Invalid years";
+                $data['_view'] = 'registrar_page/applicant/add';
+                $this->load->view('layouts/reg', $data);
+			}
+			else {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too young for college / Invalid years";
+                $data['_view'] = 'registrar_page/applicant/add';
+                $this->load->view('layouts/reg', $data);
+			}
+            
 
-            $applicant_id = $this->Applicant_model->add_applicant($params);
-            $idnum = $this->session->userdata('userIDNo');
-                    $paramsaudit = array(
-                        'userIDNo' => $idnum,
-                        'auditDesc' => 'Successfully added a new applicant',
-                    );
-                    $this->Auditlog_model->add_auditlog($paramsaudit);
-            redirect('reg_applicant/index');
+
         }
         else {
             $data['_view'] = 'registrar_page/applicant/add';

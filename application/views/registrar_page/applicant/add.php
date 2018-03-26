@@ -40,7 +40,6 @@
                                 <option value="">Select Student Status...</option>
                                 <?php
                                 $studentstat_values = array(
-                                    'Approved'=>'Approved',
                                     'For Interview'=>'For Interview',
                                     'For Examination'=>'For Examination',
                                     'Pending'=>'Pending',
@@ -84,6 +83,7 @@
 
                             <input type="email" name="email" placeholder="Ex: example@yahoo.com" value="<?php echo $this->input->post('email'); ?>" class="form-control" id="email" />
                             <span class="text-danger"><?php echo form_error('email');?></span>
+                            <span class="text-danger"><?php echo $error2;?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -103,6 +103,7 @@
                                 </div>
                                 <input type="text" name="birthdate" value="<?php echo $this->input->post('birthdate'); ?>" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask required />
                             </div>
+                            <span class="text-danger"><?php echo $error;?></span>
                             <!-- /.input group -->
                         </div>
                     </div>

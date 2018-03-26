@@ -98,6 +98,7 @@
 
                             <input type="email" name="email" placeholder="Ex: example@yahoo.com" value="<?php echo $this->input->post('email'); ?>" class="form-control" id="email" />
                             <span class="text-danger"><?php echo form_error('email');?></span>
+                            <span class="text-danger"><?php echo $error2;?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -115,6 +116,7 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input type="text" name="birthdate" value="<?php echo $this->input->post('birthdate'); ?>" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask required />
+                                <span class="text-danger"><?php echo $error;?></span>
                             </div>
                         </div>
                     </div>

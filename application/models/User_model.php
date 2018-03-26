@@ -88,4 +88,28 @@ class User_model extends CI_Model
             return 2;
         }
     }
+
+    function valemail($params)
+    {
+        $email2 = $params['userEmail'];
+        $query = $this->db->query("SELECT userEmail from users where userEmail = '$email2'");
+        if ($query->num_rows() > 0)
+        {
+            return 1;
+        }
+        else 
+        {
+            $query2 = $this->db->query("SELECT email from applicant where email = '$email2'");
+            if ($query2->num_rows() > 0)
+            {
+              return 3;
+              //Exist in applicant   
+            }
+            else {
+                //Nothing exist
+                return 2;
+            }
+        }
+    }
+
 }

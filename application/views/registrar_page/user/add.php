@@ -105,6 +105,7 @@
 						<div class="form-group">
 							<input type="email" name="userEmail" placeholder="Ex: example@yahoo.com" value="<?php echo $this->input->post('userEmail'); ?>" class="form-control" id="userEmail" />
 							<span class="text-danger"><?php echo form_error('userEmail');?></span>
+							<span class="text-danger"><?php echo $error3;?></span>
 						</div>
 					</div>
 					<div class="col-md-6">
