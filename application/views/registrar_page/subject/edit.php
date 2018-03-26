@@ -69,6 +69,50 @@
 							<span class="text-danger"><?php echo form_error('units');?></span>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<label for="year" class="control-label"><span class="text-danger">*</span>Year Level</label>
+						<div class="form-group">
+							<select name="semester" class="form-control">
+								<option value="">Select a Year Level</option>
+								<?php 
+								$year_values = array(
+									'1st'=>'1ST Year',
+									'2nd'=>'2ND Year',
+									'3rd'=>'3RD Year',
+									'4th'=>'4TH Year',									
+								);
+
+								foreach($year_values as $value => $display_text)
+								{
+									$selected = ($value == $this->input->post('year')) ? ' selected="selected"' : "";
+
+									echo '<option value="'.$value.'" '.$selected.'>'.$display_text.'</option>';
+								} 
+								?>
+							</select>
+						<span class="text-danger"><?php echo form_error('year');?></span>
+					</div>
+					<div class="col-md-12">
+						<label for="semester" class="control-label"><span class="text-danger">*</span>Semester</label>
+						<div class="form-group">
+							<select name="semester" class="form-control">
+								<option value="">Select a Semester</option>
+								<?php 
+								$semester_values = array(
+									'1ST'=>'1ST Semester',
+									'2ND'=>'2ND Semester',
+								);
+
+								foreach($semester_values as $value => $display_text)
+								{
+									$selected = ($value == $this->input->post('semester')) ? ' selected="selected"' : "";
+
+									echo '<option value="'.$value.'" '.$selected.'>'.$display_text.'</option>';
+								} 
+								?>
+							</select>
+						<span class="text-danger"><?php echo form_error('semester');?></span>
+					</div>
 				</div>
 			</div>
 			<div class="box-footer">

@@ -63,7 +63,9 @@ class Reg_Subject extends CI_Controller{
 		$this->form_validation->set_rules('subjectType','Subject Type','required|max_length[50]');
 		$this->form_validation->set_rules('subjectCode','Subject Code','required|max_length[15]');
 		$this->form_validation->set_rules('subjectName','Subject Name','required|max_length[100]');
-		$this->form_validation->set_rules('units','Units','required|integer');
+        $this->form_validation->set_rules('units','Units','required|integer');
+        $this->form_validation->set_rules('year','Year Level','required|max_length[3]');
+        $this->form_validation->set_rules('semester','Semester','required');  
 		
 		if($this->form_validation->run())     
         {   
@@ -73,6 +75,8 @@ class Reg_Subject extends CI_Controller{
 				'subjectCode' => $this->input->post('subjectCode'),
 				'subjectName' => $this->input->post('subjectName'),
                 'units' => $this->input->post('units'),
+                'year' => $this->input->post('year'),
+                'semester' => $this->input->post('semester'),
                 'status' => 'Active',
             );
             $subject_id = $this->Subject_model->add_subject($params);
@@ -116,7 +120,9 @@ class Reg_Subject extends CI_Controller{
             $this->form_validation->set_rules('subjectType','SubjectType','required|max_length[50]');
             $this->form_validation->set_rules('subjectCode','SubjectCode','required|max_length[15]');
 			$this->form_validation->set_rules('subjectName','SubjectName','required|max_length[100]');
-			$this->form_validation->set_rules('units','Units','required|integer');
+            $this->form_validation->set_rules('units','Units','required|integer');
+            $this->form_validation->set_rules('year','Year Level','required|max_length[3]');
+            $this->form_validation->set_rules('semester','Semester','required');
 		
 			if($this->form_validation->run())     
             {   
@@ -125,7 +131,9 @@ class Reg_Subject extends CI_Controller{
                     'courseID' => $this->input->post('courseID'),
 					'subjectCode' => $this->input->post('subjectCode'),
 					'subjectName' => $this->input->post('subjectName'),
-					'units' => $this->input->post('units'),
+                    'units' => $this->input->post('units'),
+                    'year' => $this->input->post('year'),
+                    'semester' => $this->input->post('semester'),
                 );
 
                 $this->Subject_model->update_subject($subjectID,$params); 
