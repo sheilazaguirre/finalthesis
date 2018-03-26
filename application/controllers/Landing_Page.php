@@ -8,6 +8,7 @@ class Landing_Page extends CI_Controller{
         $this->load->model('Landing_Page_model');        
         $this->load->model('User_model'); 
         $this->load->model('Auditlog_model');
+        $this->load->model('Applicant_model');
         $this->load->helper('url');
         $this->load->library('session');
     } 
@@ -231,7 +232,8 @@ class Landing_Page extends CI_Controller{
 
     function application()
     {
-        $this->load->model('Applicant_model');
+        $data['error'] = ""; //age
+        $data['error2'] = ""; //email
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
@@ -302,14 +304,51 @@ class Landing_Page extends CI_Controller{
                 'addprov' => $this->input->post('addprov'),
                 'reasonleave' => $this->input->post('reasonleave'),
             );
-
-            $applicant_id = $this->Applicant_model->add_applicant($params);
-            $this->load->view('layouts/header');
-            $this->load->view('landing_page/application_success');
-            $this->load->view('layouts/footer');
+            
+            if ($age >= 14 && $age <39) 
+            {
+                $emailres = $this->Applicant_model->valemail($params);
+					
+                if ($emailres === 2) {				
+                    $applicant_id = $this->Applicant_model->add_applicant($params);
+                    $idnum = $this->session->userdata('userIDNo');
+                            $paramsaudit = array(
+                                'userIDNo' => $idnum,
+                                'auditDesc' => 'Added Applicant',
+                            );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+                    $this->load->view('layouts/header');
+                    $this->load->view('landing_page/application_success');
+                    $this->load->view('layouts/footer');
+                }
+                else if ($emailres === 3) {
+                    $this->load->model('Usertype_model');
+                    $data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+                    $data['error2'] = "Email already exist for an applicant";
+                    $this->load->view('landing_page/application',$data);
+                }
+                else {
+                    $this->load->model('Usertype_model');
+                    $data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+                    $data['error2'] = "Email already exist for a user";
+                    $this->load->view('landing_page/application',$data);
+                }
+            }
+            else if ($age >= 40) {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too old / Invalid years";
+                $this->load->view('landing_page/application',$data);
+			}
+			else {
+				$this->load->model('Usertype_model');
+				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+				$data['error'] = "Student too young for college / Invalid years";
+                $this->load->view('landing_page/application',$data);
+			} 
         }
         else {
-            $this->load->view('landing_page/application');
+            $this->load->view('landing_page/application',$data);
         }
     }
 
@@ -516,17 +555,17 @@ class Landing_Page extends CI_Controller{
 
     function comsci()
     {
-        $this->load->view('landing_page/Com Sci.php');
+        $this->load->view('landing_page/Com Sci.html');
     }
 
     function bisad()
     {
-        $this->load->view('landing_page/BS Business Admin.php');
+        $this->load->view('landing_page/BS Business Admin.html');
     }
 
     function elemed()
     {
-        $this->load->view('landing_page/Elementary Education.php');
+        $this->load->view('landing_page/Elementary Education.html');
     }
 
     function seced()
@@ -536,17 +575,17 @@ class Landing_Page extends CI_Controller{
 
     function seced_filipino()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Filipino.php');
+        $this->load->view('landing_page/BA Secondary Ed - Filipino.html');
     }
 
     function seced_math()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Math.php');
+        $this->load->view('landing_page/BA Secondary Ed - Math.html');
     }
 
     function seced_science()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Science.php');
+        $this->load->view('landing_page/BA Secondary Ed - Science.html');
     }
 
 }
