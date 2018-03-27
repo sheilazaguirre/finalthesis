@@ -24,6 +24,7 @@ class Applicant_model extends CI_Model
         $this->db->join('course', 'courseID');
         $this->db->order_by('apid', 'asc');
         $this->db->where('studentstat !=', 'Approved');
+        $this->db->where('applicant.status =', 'Active');
         return $this->db->get('applicant')->result_array();
     }
         
@@ -67,6 +68,29 @@ class Applicant_model extends CI_Model
         $this->db->where('apid',$apid);
         return $this->db->update('applicant',$params);
 
+    }
+
+    function valemail($params)
+    {
+        $email = $params['email'];
+        $query = $this->db->query("SELECT userEmail from users where userEmail = '$email'");
+        if ($query->num_rows() > 0)
+        {
+            return 1;
+        }
+        else 
+        {
+            $query2 = $this->db->query("SELECT email from applicant where email = '$email'");
+            if ($query2->num_rows() > 0)
+            {
+              return 3;
+              //Exist in applicant   
+            }
+            else {
+                //Nothing exist
+                return 2;
+            }
+        }
     }
 }
 

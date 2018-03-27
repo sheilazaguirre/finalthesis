@@ -34,7 +34,8 @@ class User extends CI_Controller{
     function add()
     {   
 		$data['error'] = "";
-		$data['error2'] = "";
+		$data['error2'] = ""; //userID error
+		$data['error3'] = ""; //Email error
         $this->load->library('form_validation');
 
 		$this->form_validation->set_rules('userIDNo','UserIDNo','required|integer');
@@ -108,16 +109,34 @@ class User extends CI_Controller{
 				$valres = $this->User_model->validate($params);
 				if ($valres === 2)
 				{
-					$user_id = $this->User_model->add_user($params);
-					$idnum = $this->session->userdata('userIDNo');
-                        $paramsaudit = array(
-                            'userIDNo' => $idnum,
-                            'auditDesc' => 'Successfully added a user',
-                        );
-					redirect('user/index');
+					$emailres = $this->User_model->valemail($params);
+					
+					if ($emailres === 2) {
+						$user_id = $this->User_model->add_user($params);
+						$idnum = $this->session->userdata('userIDNo');
+							$paramsaudit = array(
+								'userIDNo' => $idnum,
+								'auditDesc' => 'Successfully added a user',
+							);
+						redirect('user/index');
+					}
+					else if ($emailres === 3) {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error3'] = "Email already exist for an applicant";
+						$data['_view'] = 'user/add';
+						$this->load->view('layouts/main',$data);
+					}
+					else {
+						$this->load->model('Usertype_model');
+						$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
+						$data['error3'] = "Email already exist for a user";
+						$data['_view'] = 'user/add';
+						$this->load->view('layouts/main',$data);
+					}
 				}
 				else {
-					$this->load->model('Usertype_model');
+				$this->load->model('Usertype_model');
 				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
 				$data['error2'] = "USERID already exist (Check database)";
            		$data['_view'] = 'user/add';
