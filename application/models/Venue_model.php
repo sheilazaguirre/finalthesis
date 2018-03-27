@@ -30,8 +30,9 @@ class Venue_model extends CI_Model
      */
     function get_all_venues($params = array())
     {
-        $this->db->order_by('venueCode', 'asc');
-        $this->db->where('status !=', 'Archived');
+        $query = $this->db->query(
+            "SELECT * FROM venues"
+        );
         if(isset($params) && !empty($params))
         {
             $this->db->limit($params['limit'], $params['offset']);
@@ -61,6 +62,12 @@ class Venue_model extends CI_Model
      * function to delete venue
      */
     function delete_venue($venueID)
+    {
+        $this->db->where('venueID',$venueID);
+        return $this->db->update('venues',$params);
+    }
+
+    function restore_venue($venueID)
     {
         $this->db->where('venueID',$venueID);
         return $this->db->update('venues',$params);

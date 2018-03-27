@@ -39,7 +39,7 @@ class Reg_Course extends CI_Controller{
             $config['total_rows'] = $this->Course_model->get_all_courses_count();
             $this->pagination->initialize($config);
 
-            $data['courses'] = $this->Course_model->get_all_courses($params);
+            $data['courses'] = $this->Course_model->get_all_courses2($params);
             
             $data['_view'] = 'registrar_page/course/index';
             $this->load->view('layouts/reg',$data);

@@ -30,7 +30,7 @@ class Reg_Announcement extends CI_Controller{
             $data['fn'] = $this->session->userdata('userFN');
             $data['ln'] = $this->session->userdata('userLN');
             $data['userID'] = $this->session->userdata('userIDNo');
-            $data['announcements'] = $this->Announcement_model->get_announcement();
+            $data['announcements'] = $this->Announcement_model->get_announcement2();
             $data['_view'] = 'registrar_page/announcement/index';
             $this->load->view('layouts/reg',$data);
         }

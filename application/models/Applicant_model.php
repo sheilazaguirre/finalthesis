@@ -21,6 +21,16 @@ class Applicant_model extends CI_Model
      */
     function get_all_applicant()
     {
+        $query = $this->db->query(
+            "SELECT a.apid, a.apfn, a.apmn, a.apln, c.courseCode, a.age, a.gender, a.civstat, a.nationality, a.datesubmitted, a.datemodified, a.studentstat, a.status from applicant a
+            INNER JOIN course c ON a.courseID = c.courseID
+            WHERE a.status != 'Closed'"
+        );
+        return $query->result_array();
+    }
+
+    function get_all_applicant2()
+    {
         $this->db->join('course', 'courseID');
         $this->db->order_by('apid', 'asc');
         $this->db->where('studentstat !=', 'Approved');
@@ -68,6 +78,12 @@ class Applicant_model extends CI_Model
         $this->db->where('apid',$apid);
         return $this->db->update('applicant',$params);
 
+    }
+
+    function restore_applicant($apid)
+    {
+        $this->db->where('apid',$apid);
+        return $this->db->update('applicant',$params);
     }
 
     function valemail($params)

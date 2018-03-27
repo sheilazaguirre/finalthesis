@@ -24,6 +24,7 @@
                         <th>Nationality</th>
                         <th>Date Submitted</th>
                         <th>Date Modified</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
 
@@ -42,11 +43,15 @@
                             <td><?php echo $a['nationality']; ?></td>
                             <td><?php echo $a['datesubmitted']; ?></td>
                             <td><?php echo $a['datemodified']; ?></td>
+                            <td><?php echo $a['status']; ?></td>                            
                             <td>
                                 <a href="<?php echo site_url('applicant/edit/'.$a['apid']); ?>" class="btn btn-warning btn-xs"><span class="fa fa-pencil" ></span> Edit</a>
                                 <a href="<?php echo site_url('applicant/adduser/'.$a['apid']); ?>" class="btn btn-info btn-xs" onclick="confirm('Accept the Applicant?')"><span class="fa fa-envelope" ></span> Approve</a>
                                 <?php echo form_close(); ?>
                                 <a href="<?php echo site_url('applicant/remove/'.$a['apid']); ?>" class="btn btn-danger btn-xs" onclick="confirm('Remove the Applicant?')"><span class="fa fa-trash"></span> Delete</a>
+                                <?php if($a['status'] != 'Active'): ?>
+                                    <a href="<?php echo site_url('applicant/restore/'.$a['apid']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                                <?php endif;?>
                             </td>
                         </tr>
                     <?php } ?>

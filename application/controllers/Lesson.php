@@ -179,6 +179,7 @@ class Lesson extends CI_Controller{
         if(isset($lesson['lessonID']))
         {
             $this->db->set('status', 'Archived');
+            $this->db->set('dateModified', 'NOW()', FALSE);
             $this->Lesson_model->delete_lesson($lessonID);
             $idnum = $this->session->userdata('userIDNo');
                                 $paramsaudit = array(
@@ -189,6 +190,27 @@ class Lesson extends CI_Controller{
         }
         else
             show_error('The lesson you are trying to delete does not exist.');
+    }
+
+    function restore($lessonID)
+    {
+        $lesson = $this->Lesson_model->get_lesson($lessonID);
+
+        // check if the lesson exists before trying to delete it
+        if(isset($lesson['lessonID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->db->set('dateModified', 'NOW()', FALSE);
+            $this->Lesson_model->restore_lesson($lessonID);
+            $idnum = $this->session->userdata('userIDNo');
+                                $paramsaudit = array(
+                                    'userIDNo' => $idnum,
+                                    'auditDesc' => 'Restore lesson',
+                                );      
+            redirect('lesson/index');
+        }
+        else
+            show_error('The lesson you are trying to restore does not exist.');
     }
     
 }

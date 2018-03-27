@@ -30,6 +30,15 @@ class Subject_model extends CI_Model
      */
     function get_all_subjects($params = array())
     {
+        $query = $this->db->query(
+            "SELECT s.subjectID, s.subjectType, c.courseCode, s.subjectCode, s.subjectName, s.units, s.year, s.semester, s.status from subjects s
+            INNER JOIN course c ON c.courseID = s.courseID"
+        );
+        return $query->result_array();
+    }
+
+    function get_all_subjects2($params = array())
+    {
         $this->db->join('course', 'courseID');
         $this->db->order_by('subjectCode', 'asc');
         $this->db->where('subjects.status !=', 'Archived');
@@ -62,6 +71,12 @@ class Subject_model extends CI_Model
      * function to delete subject
      */
     function delete_subject($subjectID)
+    {
+        $this->db->where('subjectID',$subjectID);
+        return $this->db->update('subjects',$params);
+    }
+
+    function restore_subject($subjectID)
     {
         $this->db->where('subjectID',$subjectID);
         return $this->db->update('subjects',$params);

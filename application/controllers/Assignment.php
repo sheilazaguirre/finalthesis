@@ -199,5 +199,26 @@ class Assignment extends CI_Controller{
         else
             show_error('The assignment you are trying to delete does not exist.');
     }
+
+    function restore($assignID)
+    {
+        $assignment = $this->Assignment_model->get_assignment($assignID);
+
+        if(isset($assignment['assignID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->db->set('dateModified', 'NOW()', FALSE);
+            $this->Assignment_model->restore_assignment($assignID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore assignment',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('assignment/index');
+        }
+        else
+            show_error('The assignment you are trying to restore does not exist.');
+    }
     
 }

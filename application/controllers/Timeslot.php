@@ -128,5 +128,25 @@ class Timeslot extends CI_Controller{
         else
             show_error('The timeslot you are trying to delete does not exist.');
     }
+
+    function restore($timeSlotID)
+    {
+        $timeslot = $this->Timeslot_model->get_timeslot($timeSlotID);
+
+        if(isset($timeslot['timeSlotID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->Timeslot_model->restore_timeslot($timeSlotID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore timeslot',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('timeslot/index');
+        }
+        else
+            show_error('The timeslot you are trying to restore does not exist.');
+    }
     
 }

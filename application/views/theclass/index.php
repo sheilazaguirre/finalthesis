@@ -34,7 +34,10 @@
 						<td><?php echo $c['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('theclass/edit/'.$c['classID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                            <a href="<?php echo site_url('theclass/remove/'.$c['classID']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <a href="<?php echo site_url('theclass/remove/'.$c['classID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($c['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('theclass/restore/'.$c['classID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <?php } ?>

@@ -149,7 +149,7 @@
                                 </li>
 							</ul>
                         </li>
-						<li>
+						<!-- <li>
                             <a href="#">
                                 <i class="fa fa-desktop"></i> <span>Block</span>
                             </a>
@@ -161,7 +161,7 @@
                                     <a href="<?php echo site_url('block/index');?>"><i class="fa fa-list-ul"></i> View Block</a>
                                 </li>
 							</ul>
-                        </li>
+                        </li> -->
 						<li>
                             <a href="#">
                                 <i class="fa fa-graduation-cap"></i> <span>Class</span>
@@ -201,7 +201,7 @@
                                 </li>
 							</ul>
                         </li>
-						<li>
+						<!-- <li>
                             <a href="#">
                                 <i class="fa fa-desktop"></i> <span>Faculty</span>
                             </a>
@@ -213,7 +213,7 @@
                                     <a href="<?php echo site_url('faculty/index');?>"><i class="fa fa-list-ul"></i> View Faculties</a>
                                 </li>
 							</ul>
-                        </li>
+                        </li> -->
 						<li>
                             <a href="#">
                                 <i class="fa fa-book"></i> <span>Lesson</span>
@@ -227,7 +227,7 @@
                                 </li>
 							</ul>
                         </li>
-						<li>
+						<!-- <li>
                             <a href="#">
                                 <i class="fa fa-desktop"></i> <span>Student</span>
                             </a>
@@ -239,7 +239,7 @@
                                     <a href="<?php echo site_url('student/index');?>"><i class="fa fa-list-ul"></i> View Students</a>
                                 </li>
 							</ul>
-                        </li>
+                        </li> -->
 						<li>
                             <a href="#">
                                 <i class="fa fa-desktop"></i> <span>Subject</span>

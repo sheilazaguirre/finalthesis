@@ -328,6 +328,7 @@ class Applicant extends CI_Controller{
         if(isset($applicant['apid']))
         {
             $this->db->set('status', 'Archived');
+            $this->db->set('dateModified', 'NOW()', FALSE);
             $this->Applicant_model->archive_applicant($apid, $params);
             $idnum = $this->session->userdata('userIDNo');
                     $paramsaudit = array(
@@ -339,6 +340,27 @@ class Applicant extends CI_Controller{
         }
         else
             show_error('The applicant you are trying to delete does not exist.');
+    }
+
+    function restore($apid)
+    {
+        $applicant = $this->Applicant_model->get_applicant($apid);
+
+        if(isset($applicant['apid']))
+        {
+            $this->db->set('status', 'Active');
+            $this->db->set('dateModified', 'NOW()', FALSE);
+            $this->Applicant_model->restore_applicant($apid);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore applicant',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('applicant/index');
+        }
+        else
+            show_error('The applicant you are trying to restore does not exist.');
     }
 
 }

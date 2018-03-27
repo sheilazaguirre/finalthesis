@@ -29,6 +29,9 @@
 						<td>
                             <a href="<?php echo site_url('venue/edit/'.$v['venueID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
                             <a href="<?php echo site_url('venue/remove/'.$v['venueID']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($v['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('venue/restore/'.$v['venueID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <?php } ?>

@@ -21,6 +21,15 @@ class User_model extends CI_Model
      */
     function get_all_users()
     {
+        $query = $this->db->query(
+            "SELECT u.userID, ut.userType, u.gender, u.userIDNo, u.userLN, u.userFN, u.userEmail, u.userMobile, u.age, u.status from users u
+            INNER JOIN userType ut ON ut.userTypeID = u.userTypeID"
+        );
+        return $query->result_array();
+    }
+
+    function get_all_users2()
+    {
         $this->db->join('usertype', 'userTypeID');
         $this->db->order_by('userID', 'asc');
         $this->db->where('status', 'Active');
@@ -110,6 +119,12 @@ class User_model extends CI_Model
                 return 2;
             }
         }
+    }
+
+    function restore_user($userID)
+    {
+        $this->db->where('userID',$userID);
+        return $this->db->update('users',$params);
     }
 
 }

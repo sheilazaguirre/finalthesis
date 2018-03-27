@@ -28,7 +28,10 @@
 						<td><?php echo $t['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('timeslot/edit/'.$t['timeSlotID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                            <a href="<?php echo site_url('timeslot/remove/'.$t['timeSlotID']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <a href="<?php echo site_url('timeslot/remove/'.$t['timeSlotID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($t['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('timeslot/restore/'.$t['timeSlotID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <?php } ?>

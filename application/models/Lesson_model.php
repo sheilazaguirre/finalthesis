@@ -21,9 +21,12 @@ class Lesson_model extends CI_Model
      */
     function get_all_lessons()
     {
-        $this->db->order_by('lessonID', 'asc');
-        $this->db->where('status !=', 'Archived');
-        return $this->db->get('lessons')->result_array();
+        $query = $this->db->query(
+            "SELECT l.lessonID, s.subjectCode, l.lessonFile, l.lessonDesc, l.lessonTitle, l.dateUploaded, l.dateModified, l.status from lessons l
+            INNER JOIN classes c ON l.classID = c.classID
+            INNER JOIN subjects s ON s.subjectID = c.subjectID"
+        );
+        return $query->result_array();
     }
         
     /*
@@ -48,6 +51,12 @@ class Lesson_model extends CI_Model
      * function to delete lesson
      */
     function delete_lesson($lessonID)
+    {
+        $this->db->where('lessonID',$lessonID);
+        return $this->db->update('lessons',$params);
+    }
+
+    function restore_lesson($lessonID)
     {
         $this->db->where('lessonID',$lessonID);
         return $this->db->update('lessons',$params);

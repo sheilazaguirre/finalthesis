@@ -21,9 +21,10 @@ class Timeslot_model extends CI_Model
      */
     function get_all_timeslots()
     {
-        $this->db->order_by('timeSlotID', 'asc');
-        $this->db->where('status !=', 'Archived');
-        return $this->db->get('timeslots')->result_array();
+        $query = $this->db->query(
+            "SELECT * FROM timeslots"
+        );
+        return $query->result_array();
     }
         
     /*
@@ -48,6 +49,12 @@ class Timeslot_model extends CI_Model
      * function to delete timeslot
      */
     function delete_timeslot($timeSlotID)
+    {
+        $this->db->where('timeSlotID',$timeSlotID);
+        return $this->db->update('timeslots',$params);
+    }
+
+    function restore_timeslot($timeSlotID)
     {
         $this->db->where('timeSlotID',$timeSlotID);
         return $this->db->update('timeslots',$params);

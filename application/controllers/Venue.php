@@ -136,5 +136,24 @@ class Venue extends CI_Controller{
         else
             show_error('The venue you are trying to delete does not exist.');
     }
+
+    function restore($venueID)
+    {
+        $venue = $this->Venue_model->get_venue($venueID);
+
+        if(isset($venue['venueID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->Venue_model->restore_venue($venueID);
+            $idnum = $this->session->userdata('userIDNo');
+                        $paramsaudit = array(
+                            'userIDNo' => $idnum,
+                            'auditDesc' => 'Successfully removed venue',
+                        );
+            redirect('venue/index');
+        }
+        else
+            show_error('The venue you are trying to restore does not exist.');
+    }
     
 }

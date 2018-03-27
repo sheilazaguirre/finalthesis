@@ -38,7 +38,7 @@ class Reg_Theclass extends CI_Controller{
             $config['total_rows'] = $this->Theclass_model->get_all_theclasses_count();
             $this->pagination->initialize($config);
 
-            $data['theclasses'] = $this->Theclass_model->get_all_theclasses($params);
+            $data['theclasses'] = $this->Theclass_model->get_all_theclasses2($params);
             
             $data['_view'] = 'registrar_page/theclass/index';
             $this->load->view('layouts/reg',$data);
