@@ -207,9 +207,6 @@
 							</a>
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="g-recaptcha" data-sitekey="6LfRmzcUAAAAAGUARi6CAjGlAVfuO0AzGwIS1z3k" align="center"></div>
-					</div>
 			<?php echo form_close(); ?>
 			</div>
 		</div>

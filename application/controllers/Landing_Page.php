@@ -20,11 +20,6 @@ class Landing_Page extends CI_Controller{
         $this->form_validation->set_rules('userPassword','Password','required|max_length[255]');
         $this->form_validation->set_rules('userIDNo','ID Number','required|max_length[50]');
         $_SESSION['errormsg'] = 0;
-        $form_reponse=$this->input->post('g-recaptcha-response');
-        $url="https://www.google.com/recaptcha/api/siteverify";
-        $secretkey="6LfRmzcUAAAAALyhGzTaoIa5XsHxb3MocPDbDZd_";
-        $response=file_get_contents($url."?secret=".$secretkey."&response=".$form_reponse."&remoteip=".$_SERVER["REMOTE_ADDR"]);
-        $dota=json_decode($response);
         if($this->form_validation->run())     
         {   
             $params = array(
@@ -35,7 +30,7 @@ class Landing_Page extends CI_Controller{
                 $this->session->set_flashdata('err_message', 'Invalid ID Number or Password!');
             }
             else {
-                if(isset($login['userIDNo']) and isset($login['userTypeID']) and isset($dota->success) && $dota->success=="true")
+                if(isset($login['userIDNo']) and isset($login['userTypeID']))
                 {
                     $newdata = array( 
                         'userIDNo'  => $login['userIDNo'],
@@ -220,14 +215,15 @@ class Landing_Page extends CI_Controller{
         $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
         
         $config = $this->config->item('pagination');
-        $config['base_url'] = site_url('announcement/index?');
+        $config['base_url'] = site_url('landing_page/announcements?');
         $config['total_rows'] = $this->Announcement_model->get_all_announcements_count();
         $this->pagination->initialize($config);
 
         $data['announcements'] = $this->Announcement_model->get_announcement();
         
-        $this->load->view('landing_page/announcements',$data);
+        $this->load->view('landing_page/newannounce',$data);
     }
+
 
     function application()
     {
@@ -337,11 +333,7 @@ class Landing_Page extends CI_Controller{
         $this->form_validation->set_rules('userPassword','Password','required|max_length[255]');
         $this->form_validation->set_rules('userIDNo','ID Number','required|max_length[50]');
         $_SESSION['errormsg'] = 0;
-        $form_reponse=$this->input->post('g-recaptcha-response');
-        $url="https://www.google.com/recaptcha/api/siteverify";
-        $secretkey="6LfRmzcUAAAAALyhGzTaoIa5XsHxb3MocPDbDZd_";
-        $response=file_get_contents($url."?secret=".$secretkey."&response=".$form_reponse."&remoteip=".$_SERVER["REMOTE_ADDR"]);
-        $dota=json_decode($response);
+
         if($this->form_validation->run())     
         {   
             $params = array(
@@ -354,7 +346,7 @@ class Landing_Page extends CI_Controller{
                 // $this->load->view('landing_page/faculty', $data);
             }
             else {
-                if(isset($login['userIDNo']) and isset($login['userTypeID']) and isset($dota->success) && $dota->success=="true")
+                if(isset($login['userIDNo']) and isset($login['userTypeID']))
                 {
                     
                     $newdata = array( 
