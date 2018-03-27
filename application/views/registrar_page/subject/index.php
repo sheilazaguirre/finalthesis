@@ -17,6 +17,8 @@
 						<th>Subject Code</th>
 						<th>Subject Name</th>
 						<th>Units</th>
+                        <th>Year</th>
+                        <th>Semester</th>                        
 						<th>Status</th>
 						<th>Actions</th>
                     </tr>
@@ -29,6 +31,8 @@
 						<td><?php echo $s['subjectCode']; ?></td>
 						<td><?php echo $s['subjectName']; ?></td>
 						<td><?php echo $s['units']; ?></td>
+						<td><?php echo $s['year']; ?></td>
+						<td><?php echo $s['semester']; ?> Semester</td>                        
 						<td><?php echo $s['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('reg_subject/edit/'.$s['subjectID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 

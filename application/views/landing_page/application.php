@@ -74,21 +74,21 @@
                     <div class="col-md-6">
                         <label for="apfn" class="control-label"><span class="text-danger">*</span>First Name</label>
                         <div class="form-group">
-                            <input type="text" name="apfn" value="<?php echo $this->input->post('apfn'); ?>" class="form-control" id="apfn" />
+                            <input type="text" name="apfn" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('apfn'); ?>" class="form-control" id="apfn" />
                             <span class="text-danger"><?php echo form_error('apfn');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="apln" class="control-label"><span class="text-danger">*</span>Last Name</label>
                         <div class="form-group">
-                            <input type="text" name="apln" value="<?php echo $this->input->post('apln'); ?>" class="form-control" id="apln" />
+                            <input type="text" name="apln" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('apln'); ?>" class="form-control" id="apln" />
                             <span class="text-danger"><?php echo form_error('apln');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="apmn" class="control-label"><span class="text-danger">*</span>Middle Name</label>
                         <div class="form-group">
-                            <input type="text" name="apmn" value="<?php echo $this->input->post('apmn'); ?>" class="form-control" id="apmn" />
+                            <input type="text" name="apmn" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('apmn'); ?>" class="form-control" id="apmn" />
                             <span class="text-danger"><?php echo form_error('apmn');?></span>
                         </div>
                     </div>
@@ -258,28 +258,28 @@
                     <div class="col-md-6">
                         <label for="fathername" class="control-label"><span class="text-danger">*</span>Father Name</label>
                         <div class="form-group">
-                            <input type="text" name="fathername" value="<?php echo $this->input->post('fathername'); ?>" class="form-control" id="fathername" />
+                            <input type="text" name="fathername" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('fathername'); ?>" class="form-control" id="fathername" />
                             <span class="text-danger"><?php echo form_error('fathername');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="fatherocc" class="control-label"><span class="text-danger">*</span>Father's Occupation</label>
                         <div class="form-group">
-                            <input type="text" name="fatherocc" value="<?php echo $this->input->post('fatherocc'); ?>" class="form-control" id="fatherocc" />
+                            <input type="text" name="fatherocc" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('fatherocc'); ?>" class="form-control" id="fatherocc" />
                             <span class="text-danger"><?php echo form_error('fatherocc');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="mothername" class="control-label"><span class="text-danger">*</span>Mothers' Name</label>
                         <div class="form-group">
-                            <input type="text" name="mothername" value="<?php echo $this->input->post('mothername'); ?>" class="form-control" id="mothername" />
+                            <input type="text" name="mothername" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('mothername'); ?>" class="form-control" id="mothername" />
                             <span class="text-danger"><?php echo form_error('mothername');?></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="motherocc" class="control-label"><span class="text-danger">*</span>Mother Occupation</label>
                         <div class="form-group">
-                            <input type="text" name="motherocc" value="<?php echo $this->input->post('motherocc'); ?>" class="form-control" id="motherocc" />
+                            <input type="text" name="motherocc" pattern="[a-zA-Z]{1,}" placeholder="A-Z only" value="<?php echo $this->input->post('motherocc'); ?>" class="form-control" id="motherocc" />
                             <span class="text-danger"><?php echo form_error('motherocc');?></span>
                         </div>
                     </div>
