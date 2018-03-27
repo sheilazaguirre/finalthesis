@@ -197,7 +197,7 @@ class Theclass extends CI_Controller{
         // check if the theclass exists before trying to delete it
         if(isset($theclass['classID']))
         {
-            $this->db->set('status', 'Archive');
+            $this->db->set('status', 'Archived');
             $this->Theclass_model->delete_theclass($classID);
             $idnum = $this->session->userdata('userIDNo');
                         $paramsaudit = array(
@@ -210,6 +210,27 @@ class Theclass extends CI_Controller{
         else
             show_error('The theclass you are trying to delete does not exist.');
     }
+
+    function restore($classID)
+    {
+        $theclass = $this->Theclass_model->get_theclass($classID);
+
+        if(isset($theclass['classID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->Theclass_model->restore_theclass($classID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore class',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('theclass/index');
+        }
+        else
+            show_error('The class you are trying to restore does not exist.');
+    }
+
     public function autocomplete()
     {
             // load model
@@ -227,6 +248,7 @@ class Theclass extends CI_Controller{
                 echo "<ul style='list-style: none'><li>No records found ... </em> </li>";
             }
     }
+    
     public function insert()
     {
         $idnum = $this->input->post('idnum');

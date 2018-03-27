@@ -285,6 +285,26 @@ class User extends CI_Controller{
         }
         else
             show_error('The user you are trying to delete does not exist.');
-    }
+	}
+	
+	function restore($userID)
+    {
+        $user = $this->User_model->get_user($userID);
+
+        if(isset($user['userID']))
+        {
+			$this->db->set('status', 'Active');
+			$this->db->set('dateModified', 'NOW()', FALSE);
+			$this->User_model->restore_user($userID, $params);
+			$idnum = $this->session->userdata('userIDNo');
+                        $paramsaudit = array(
+                            'userIDNo' => $idnum,
+                            'auditDesc' => 'Successfully restore a user',
+                        );
+            redirect('user/index');
+        }
+        else
+            show_error('The user you are trying to restore does not exist.');
+	}	
     
 }

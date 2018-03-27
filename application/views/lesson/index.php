@@ -12,13 +12,12 @@
                 <thead>
                     <tr>
 						<th>ID#</th>
-						<th>Class ID</th>
+						<th>Class</th>
 						<th>File</th>
 						<th>Description</th>
 						<th>Title</th>
 						<th>Date Uploaded</th>
 						<th>Date Modified</th>
-						<th>Date Expiry</th>
 						<th>Status</th>
 						<th>Actions</th>
                     </tr>
@@ -26,7 +25,7 @@
                     <?php foreach($lessons as $l){ ?>
                     <tr>
 						<td><?php echo $l['lessonID']; ?></td>
-						<td><?php echo $l['classID']; ?></td>
+						<td><?php echo $l['subjectCode']; ?></td>
 						<td><a href="../uploads/lessons/<?php echo $l['lessonFile']; ?>" target="_blank" id="btnDownload" class='btn btn-success' download>
                         Download
                         </a></td>
@@ -34,11 +33,13 @@
 						<td><?php echo $l['lessonTitle']; ?></td>
 						<td><?php echo $l['dateUploaded']; ?></td>
 						<td><?php echo $l['dateModified']; ?></td>
-						<td><?php echo $l['dateExpiry']; ?></td>
 						<td><?php echo $l['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('lesson/edit/'.$l['lessonID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                            <a href="<?php echo site_url('lesson/remove/'.$l['lessonID']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                            <a href="<?php echo site_url('lesson/remove/'.$l['lessonID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($l['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('lesson/restore/'.$l['lessonID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <?php } ?>

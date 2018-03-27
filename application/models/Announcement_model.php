@@ -17,11 +17,22 @@ class Announcement_model extends CI_Model
 
         $query = $this->db->query(
             "SELECT a.announceID, CONCAT(u.userFN,' ', u.userLN) as userName, a.announceTitle, a.announceFile, a.announceDetail, a.announceDate, a.dateUploaded, a.dateModified, a.dateExpiry, a.status from announcements a
+            INNER JOIN users u ON a.userID = u.userID"
+        );
+        return $query->result_array();
+    }
+
+    function get_announcement2()
+    {
+
+        $query = $this->db->query(
+            "SELECT a.announceID, CONCAT(u.userFN,' ', u.userLN) as userName, a.announceTitle, a.announceFile, a.announceDetail, a.announceDate, a.dateUploaded, a.dateModified, a.dateExpiry, a.status from announcements a
             INNER JOIN users u ON a.userID = u.userID
             WHERE a.status='Active'"
         );
         return $query->result_array();
     }
+
     function getannouncement($announceID)
     {
         return $this->db->get_where('announcements',array('announceID'=>$announceID))->row_array();
@@ -72,6 +83,12 @@ class Announcement_model extends CI_Model
      * function to delete announcement
      */
     function delete_announcement($announceID)
+    {
+        $this->db->where('announceID',$announceID);
+        return $this->db->update('announcements',$params);
+    }
+
+    function restore_announcement($announceID)
     {
         $this->db->where('announceID',$announceID);
         return $this->db->update('announcements',$params);

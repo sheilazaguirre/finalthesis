@@ -19,7 +19,6 @@
 						<th>Date</th>
 						<th>Date Uploaded</th>
 						<th>Date Modified</th>
-						<th>Date Expiry</th>
 						<th>Status</th>
 						<th>Actions</th>
                     </tr>
@@ -35,11 +34,13 @@
 						<td><?php echo $a['announceDate']; ?></td>
 						<td><?php echo $a['dateUploaded']; ?></td>
 						<td><?php echo $a['dateModified']; ?></td>
-						<td><?php echo $a['dateExpiry']; ?></td>
 						<td><?php echo $a['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('announcement/edit/'.$a['announceID']); ?>" class="btn btn-info btn-xs" onclick='return confirm("Edit Record?");'><span class="fa fa-pencil"></span> Edit</a> 
                             <a href="<?php echo site_url('announcement/remove/'.$a['announceID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($a['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('announcement/restore/'.$a['announceID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                 </tbody>

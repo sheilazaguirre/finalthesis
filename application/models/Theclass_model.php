@@ -20,6 +20,18 @@ class Theclass_model extends CI_Model
      */
     function get_all_theclasses()
     {
+        $query = $this->db->query(
+            "SELECT c.classID, s.subjectCode, u.userFN, u.userLN, t.dayOfWeek, t.startTime, t.endTime, v.venueCode, c.academicYear, c.semester, c.status from classes c
+            INNER JOIN users u ON u.userIDNo = c.facultyID
+            INNER JOIN timeslots t ON t.timeslotID = c.timeslotID
+            INNER JOIN venues v ON v.venueID = c.venueID
+            INNER JOIN subjects s ON s.subjectID = c.subjectID"
+        );
+        return $query->result_array();
+    }
+
+    function get_all_theclasses2()
+    {
         $this->db->from('classes c');
         $this->db->join('subjects s', 's.subjectID = c.subjectID', 'left');
         $this->db->join('users u', 'u.userIDNo = c.facultyID', 'left');
@@ -170,6 +182,12 @@ class Theclass_model extends CI_Model
         }
 
 
+    }
+
+    function restore_theclass($classID)
+    {
+        $this->db->where('classID',$classID);
+        return $this->db->update('classes',$params);
     }
     
 

@@ -186,6 +186,7 @@ class Announcement extends CI_Controller{
         if(isset($announcement['announceID']))
         {
             $this->db->set('status', 'Archived');
+            $this->db->set('dateModified', 'NOW()', FALSE);
             $this->Announcement_model->delete_announcement($announceID);
             $idnum = $this->session->userdata('userIDNo');
                     $paramsaudit = array(
@@ -197,6 +198,27 @@ class Announcement extends CI_Controller{
         }
         else
             show_error('The announcement you are trying to delete does not exist.');
+    }
+
+    function restore($announceID)
+    {
+        $announcement = $this->Announcement_model->getannouncement($announceID);
+
+        if(isset($announcement['announceID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->db->set('dateModified', 'NOW()', FALSE);
+            $this->Announcement_model->restore_announcement($announceID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore announcement',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('announcement/index');
+        }
+        else
+            show_error('The announcement you are trying to restore does not exist.');
     }
     
 }

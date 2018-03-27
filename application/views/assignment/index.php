@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
 						<th>ID#</th>
-						<th>Class ID</th>
+						<th>Class</th>
 						<th>File</th>
 						<th>Description</th>
 						<th>Title</th>
@@ -24,7 +24,7 @@
                     <?php foreach($assignments as $a){ ?>
                     <tr>
 						<td><?php echo $a['assignID']; ?></td>
-						<td><?php echo $a['classID']; ?></td>
+						<td><?php echo $a['subjectCode']; ?></td>
 						<td><a href="../uploads/assignments/<?php echo $a['assignFile']; ?>" target="_blank" class='btn btn-success' download>
                         Download
                         </a></td>
@@ -34,6 +34,9 @@
 						<td><?php echo $a['status']; ?></td>
 						<td>
                             <a href="<?php echo site_url('assignment/remove/'.$a['assignID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                            <?php if($a['status'] == 'Archived'): ?>
+                                <a href="<?php echo site_url('assignment/restore/'.$a['assignID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <?php } ?>

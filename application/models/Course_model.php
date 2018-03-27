@@ -33,6 +33,14 @@ class Course_model extends CI_Model
      */
     function get_all_courses($params = array())
     {
+        $query = $this->db->query(
+            "SELECT * from course ORDER BY courseName asc"
+        );
+        return $query->result_array();
+    }
+
+    function get_all_courses2($params = array())
+    {
         $this->db->order_by('courseName', 'asc');
         $this->db->where('status !=', 'Archived');
         if(isset($params) && !empty($params))
@@ -64,6 +72,12 @@ class Course_model extends CI_Model
      * function to delete course
      */
     function archive_course($courseID)
+    {
+        $this->db->where('courseID',$courseID);
+        return $this->db->update('course',$params);
+    }
+
+    function restore_course($courseID)
     {
         $this->db->where('courseID',$courseID);
         return $this->db->update('course',$params);

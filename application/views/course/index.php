@@ -28,7 +28,10 @@
                     <td><?php echo $c['dateModified']; ?></td>
                     <td>
                         <a href="<?php echo site_url('course/edit/'.$c['courseID']); ?>" class="btn btn-info btn-xs"><span class="fa fa-pencil"></span> Edit</a> 
-                        <a href="<?php echo site_url('course/remove/'.$c['courseID']); ?>" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span> Delete</a>
+                        <a href="<?php echo site_url('course/remove/'.$c['courseID']); ?>" class="btn btn-danger btn-xs" onclick='return confirm("Delete Record?");'><span class="fa fa-trash"></span> Delete</a>
+                        <?php if($c['status'] == 'Archived'): ?>
+                            <a href="<?php echo site_url('course/restore/'.$c['courseID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                        <?php endif;?>
                     </td>
                 </tr>
                 <?php } ?>

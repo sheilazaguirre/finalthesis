@@ -128,6 +128,7 @@ class Course extends CI_Controller{
         if(isset($course['courseID']))
         {
             $this->db->set('status', 'Archived');
+            $this->db->set('dateModified', 'NOW()', FALSE);
             $this->Course_model->archive_course($courseID, $params);
             $idnum = $this->session->userdata('userIDNo');
                         $paramsaudit = array(
@@ -138,6 +139,28 @@ class Course extends CI_Controller{
         }
         else
             show_error('The course you are trying to delete does not exist.');
+    }
+
+    function restore($courseID)
+    {
+        $course = $this->Course_model->get_course($courseID);
+
+        // check if the course exists before trying to delete it
+        if(isset($course['courseID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->db->set('dateModified', 'NOW()', FALSE);
+            $this->Course_model->restore_course($courseID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore course',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('course/index');
+        }
+        else
+            show_error('The course you are trying to restore does not exist.');
     }
     
 }

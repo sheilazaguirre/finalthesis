@@ -20,9 +20,12 @@ class Assignment_model extends CI_Model
      */
     function get_all_assignments()
     {
-        $this->db->order_by('assignID', 'asc');
-        $this->db->where('status !=', 'Archived ');
-        return $this->db->get('assignments')->result_array();
+        $query = $this->db->query(
+            "SELECT a.assignID, s.subjectCode, a.assignFile, a.assignDesc, a.assignTitle, a.dateUploaded, a.status from assignments a
+            INNER JOIN classes c ON a.classID = c.classID
+            INNER JOIN subjects s ON s.subjectID = c.subjectID"
+        );
+        return $query->result_array();
     }
         
     /*
@@ -47,6 +50,12 @@ class Assignment_model extends CI_Model
      * function to delete assignment
      */
     function delete_assignment($assignID)
+    {
+        $this->db->where('assignID',$assignID);
+        return $this->db->update('assignments',$params);
+    }
+
+    function restore_assignment($assignID)
     {
         $this->db->where('assignID',$assignID);
         return $this->db->update('assignments',$params);

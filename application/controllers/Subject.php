@@ -159,5 +159,25 @@ class Subject extends CI_Controller{
         else
             show_error('The subject you are trying to delete does not exist.');
     }
+
+    function restore($subjectID)
+    {
+        $subject = $this->Subject_model->get_subject($subjectID);
+
+        if(isset($subject['subjectID']))
+        {
+            $this->db->set('status', 'Active');
+            $this->Subject_model->restore_subject($subjectID);
+            $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Restore subject',
+                    );
+                    $this->Auditlog_model->add_auditlog($paramsaudit);
+            redirect('subject/index');
+        }
+        else
+            show_error('The subject you are trying to restore does not exist.');
+    }
     
 }

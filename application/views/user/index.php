@@ -22,6 +22,7 @@
                         <th>Email Address</th>
                         <th>Mobile Number</th>
                         <th>Age</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -36,9 +37,13 @@
                             <td><?php echo $u['userEmail']; ?></td>
                             <td><?php echo $u['userMobile']; ?></td>
                             <td><?php echo $u['age']; ?></td>
+                            <td><?php echo $u['status']; ?></td>                            
                             <td>
                                 <a href="<?php echo site_url('user/edit/'.$u['userID']); ?>" class="btn btn-info btn-xs" onclick="confirm('Edit the User?')"><span class="fa fa-pencil"></span> Edit</a>
                                 <a href="<?php echo site_url('user/remove/'.$u['userID']); ?>" class="btn btn-danger btn-xs" onclick="confirm('Archive the User?')"><span class="fa fa-trash"></span> Delete</a>
+                                <?php if($u['status'] == 'Archived'): ?>
+                                    <a href="<?php echo site_url('user/restore/'.$u['userID']); ?>" class="btn btn-success btn-xs" onclick='return confirm("Restore Record?");'><span class="fa fa-check"></span> Restore</a>
+                                <?php endif;?>
                             </td>
                         </tr>
                     <?php } ?>

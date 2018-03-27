@@ -69,7 +69,7 @@
 							<span class="text-danger"><?php echo form_error('units');?></span>
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<label for="year" class="control-label"><span class="text-danger">*</span>Year Level</label>
 						<div class="form-group">
 							<select name="semester" class="form-control">

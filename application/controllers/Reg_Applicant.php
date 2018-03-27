@@ -19,7 +19,7 @@ class Reg_Applicant extends CI_Controller{
             $data['fn'] = $this->session->userdata('userFN');
             $data['ln'] = $this->session->userdata('userLN');
             $data['userID'] = $this->session->userdata('userIDNo');
-            $data['applicant'] = $this->Applicant_model->get_all_applicant();
+            $data['applicant'] = $this->Applicant_model->get_all_applicant2();
 
             $data['_view'] = 'registrar_page/applicant/index';
             $this->load->view('layouts/reg',$data);

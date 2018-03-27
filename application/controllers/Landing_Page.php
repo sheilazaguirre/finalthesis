@@ -220,7 +220,7 @@ class Landing_Page extends CI_Controller{
         $config['total_rows'] = $this->Announcement_model->get_all_announcements_count();
         $this->pagination->initialize($config);
 
-        $data['announcements'] = $this->Announcement_model->get_announcement();
+        $data['announcements'] = $this->Announcement_model->get_announcement2();
         
         $this->load->view('landing_page/newannounce',$data);
     }
@@ -554,17 +554,17 @@ class Landing_Page extends CI_Controller{
 
     function comsci()
     {
-        $this->load->view('landing_page/Com Sci.html');
+        $this->load->view('landing_page/Com Sci.php');
     }
 
     function bisad()
     {
-        $this->load->view('landing_page/BS Business Admin.html');
+        $this->load->view('landing_page/BS Business Admin.php');
     }
 
     function elemed()
     {
-        $this->load->view('landing_page/Elementary Education.html');
+        $this->load->view('landing_page/Elementary Education.php');
     }
 
     function seced()
@@ -574,17 +574,17 @@ class Landing_Page extends CI_Controller{
 
     function seced_filipino()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Filipino.html');
+        $this->load->view('landing_page/BA Secondary Ed - Filipino.php');
     }
 
     function seced_math()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Math.html');
+        $this->load->view('landing_page/BA Secondary Ed - Math.php');
     }
 
     function seced_science()
     {
-        $this->load->view('landing_page/BA Secondary Ed - Science.html');
+        $this->load->view('landing_page/BA Secondary Ed - Science.php');
     }
 
     function appindex($apid)

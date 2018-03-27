@@ -40,7 +40,7 @@ class Reg_Subject extends CI_Controller{
             $config['total_rows'] = $this->Subject_model->get_all_subjects_count();
             $this->pagination->initialize($config);
 
-            $data['subjects'] = $this->Subject_model->get_all_subjects($params);
+            $data['subjects'] = $this->Subject_model->get_all_subjects2($params);
             
             $data['_view'] = 'registrar_page/subject/index';
             $this->load->view('layouts/reg',$data);

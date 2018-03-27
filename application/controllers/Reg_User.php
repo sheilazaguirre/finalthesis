@@ -25,7 +25,7 @@ class Reg_User extends CI_Controller{
      */
     function index()
     {
-        $data['users'] = $this->User_model->get_all_users();
+        $data['users'] = $this->User_model->get_all_users2();
         
         $data['_view'] = 'registrar_page/user/index';
         $this->load->view('layouts/reg',$data);
