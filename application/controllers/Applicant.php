@@ -341,5 +341,69 @@ class Applicant extends CI_Controller{
             show_error('The applicant you are trying to delete does not exist.');
     }
 
+    function email($apid)
+    {
+        // check if the applicant exists before trying to edit it
+        $data['applicant'] = $this->Applicant_model->get_applicant($apid);
+
+        if(isset($data['applicant']['apid']))
+        {
+            $this->load->library('form_validation');
+
+
+            if($this->form_validation->run())
+            {
+
+                $params = array(
+                    'courseID' => $this->input->post('courseID'),
+                    'studentstat' => $this->input->post('studentstat'),
+                    'status' => $this->input->post('status'),
+                    'apfn' => $this->input->post('apfn'),
+                    'apln' => $this->input->post('apln'),
+                    'apmn' => $this->input->post('apmn'),
+                    'email' => $this->input->post('email'),
+                    'mobile' => $this->input->post('mobile'),
+                    'birthdate' => $this->input->post('birthdate'),
+                    'age' => $this->input->post('age'),
+                    'birthplace' => $this->input->post('birthplace'),
+                    'gender' => $this->input->post('gender'),
+                    'civstat' => $this->input->post('civstat'),
+                    'nationality' => $this->input->post('nationality'),
+                    'religion' => $this->input->post('religion'),
+                    'addcity' => $this->input->post('addcity'),
+                    'addprov' => $this->input->post('addprov'),
+                    'elemschool' => $this->input->post('elemschool'),
+                    'secschool' => $this->input->post('secschool'),
+                    'tertschool' => $this->input->post('tertschool'),
+                    'reasonleave' => $this->input->post('reasonleave'),
+                    'guardianame' => $this->input->post('guardianame'),
+                    'relationship' => $this->input->post('relationship'),
+                    'fathername' => $this->input->post('fathername'),
+                    'fatherocc' => $this->input->post('fatherocc'),
+                    'mothername' => $this->input->post('mothername'),
+                    'motherocc' => $this->input->post('motherocc'),
+                    'datemodified' => date('Y-m-d H:i:s'),
+
+                );
+
+                $this->Applicant_model->update_applicant($apid,$params);
+                $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Edited Applicant',
+                    );
+                $this->Auditlog_model->add_auditlog($paramsaudit);
+                redirect('applicant/index');
+            }
+            else
+            {
+                $data['_view'] = 'applicant/edit';
+                $this->load->view('layouts/main',$data);
+            }
+        }
+        else
+            show_error('The applicant you are trying to edit does not exist.');
+    }
+
 }
 

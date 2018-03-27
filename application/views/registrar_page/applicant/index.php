@@ -44,9 +44,10 @@
                             <td><?php echo $a['datemodified']; ?></td>
                             <td>
                                 <a href="<?php echo site_url('reg_applicant/edit/'.$a['apid']); ?>" class="btn btn-warning btn-xs"><span class="fa fa-pencil" ></span> Edit</a>
-                                <a href="<?php echo site_url('reg_applicant/adduser/'.$a['apid']); ?>" class="btn btn-info btn-xs" onclick="confirm('Accept the Applicant?')"><span class="fa fa-envelope" ></span> Approve</a>
+                                <a href="<?php echo site_url('reg_applicant/adduser/'.$a['apid']); ?>" class="btn btn-info btn-xs" onclick="return confirm('Accept the Applicant?')"><span class="fa fa-check" ></span> Approve</a>
                                 <?php echo form_close(); ?>
-                                <a href="<?php echo site_url('reg_applicant/remove/'.$a['apid']); ?>" class="btn btn-danger btn-xs" onclick="confirm('Remove the Applicant?')"><span class="fa fa-trash"></span> Delete</a>
+                                <a href="<?php echo site_url('reg_applicant/remove/'.$a['apid']); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Remove the Applicant?')"><span class="fa fa-trash"></span> Delete</a>
+                                <a href="<?php echo site_url('email/index/'.$a['apid']); ?>" class="btn btn-success btn-xs" onclick="return confirm('Email Schedule to the Applicant?')"><span class="fa fa-envelope"></span> Email</a>
                             </td>
                         </tr>
                     <?php } ?>

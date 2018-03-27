@@ -15,6 +15,20 @@ class Applicant_model extends CI_Model
     {
         return $this->db->get_where('applicant',array('apid'=>$apid))->row_array();
     }
+
+    function get_user($params = array())
+    {
+        return $this->db->get_where('applicant', array('apid' => $params['apid']))->row_array();
+    }
+
+    function get_mo($apid)
+    {
+        $this->db->join('course', 'courseID');
+        $this->db->where('apid =', $apid);
+        $this->db->where('applicant.status =', 'Active');
+        return $this->db->get('applicant')->result_array();
+    }
+
         
     /*
      * Get all applicant
@@ -68,6 +82,12 @@ class Applicant_model extends CI_Model
         $this->db->where('apid',$apid);
         return $this->db->update('applicant',$params);
 
+    }
+
+    function emailapplicant($apid,$params)
+    {
+        $this->db->where('apid',$apid);
+        return $this->db->update('applicant',$params);
     }
 
     function valemail($params)

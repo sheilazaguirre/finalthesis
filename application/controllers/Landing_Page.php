@@ -6,9 +6,9 @@ class Landing_Page extends CI_Controller{
     {
         parent::__construct();
         $this->load->model('Landing_Page_model');        
-        $this->load->model('User_model'); 
-        $this->load->model('Auditlog_model');
+        $this->load->model('User_model');
         $this->load->model('Applicant_model');
+        $this->load->model('Auditlog_model');
         $this->load->helper('url');
         $this->load->library('session');
     } 
@@ -226,10 +226,10 @@ class Landing_Page extends CI_Controller{
     }
 
 
+
     function application()
     {
-        $data['error'] = ""; //age
-        $data['error2'] = ""; //email
+        $this->load->model('Applicant_model');
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
@@ -300,51 +300,14 @@ class Landing_Page extends CI_Controller{
                 'addprov' => $this->input->post('addprov'),
                 'reasonleave' => $this->input->post('reasonleave'),
             );
-            
-            if ($age >= 14 && $age <39) 
-            {
-                $emailres = $this->Applicant_model->valemail($params);
-					
-                if ($emailres === 2) {				
-                    $applicant_id = $this->Applicant_model->add_applicant($params);
-                    $idnum = $this->session->userdata('userIDNo');
-                            $paramsaudit = array(
-                                'userIDNo' => $idnum,
-                                'auditDesc' => 'Added Applicant',
-                            );
-                    $this->Auditlog_model->add_auditlog($paramsaudit);
-                    $this->load->view('layouts/header');
-                    $this->load->view('landing_page/application_success');
-                    $this->load->view('layouts/footer');
-                }
-                else if ($emailres === 3) {
-                    $this->load->model('Usertype_model');
-                    $data['all_usertype'] = $this->Usertype_model->get_all_usertype();
-                    $data['error2'] = "Email already exist for an applicant";
-                    $this->load->view('landing_page/application',$data);
-                }
-                else {
-                    $this->load->model('Usertype_model');
-                    $data['all_usertype'] = $this->Usertype_model->get_all_usertype();
-                    $data['error2'] = "Email already exist for a user";
-                    $this->load->view('landing_page/application',$data);
-                }
-            }
-            else if ($age >= 40) {
-				$this->load->model('Usertype_model');
-				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
-				$data['error'] = "Student too old / Invalid years";
-                $this->load->view('landing_page/application',$data);
-			}
-			else {
-				$this->load->model('Usertype_model');
-				$data['all_usertype'] = $this->Usertype_model->get_all_usertype();
-				$data['error'] = "Student too young for college / Invalid years";
-                $this->load->view('landing_page/application',$data);
-			} 
+
+            $applicant_id = $this->Applicant_model->add_applicant($params);
+            $this->load->view('layouts/header');
+            $this->load->view('landing_page/application_success');
+            $this->load->view('layouts/footer');
         }
         else {
-            $this->load->view('landing_page/application',$data);
+            $this->load->view('landing_page/application');
         }
     }
 
@@ -419,6 +382,50 @@ class Landing_Page extends CI_Controller{
         $data['_view'] = 'landing_page/faculty';
         $this->load->view('landing_page/faculty', $data);
         session_destroy();
+    }
+
+    function applicant()
+    {
+        $this->load->library('session');
+        $data = array('error' => '');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('userPassword','APID','required|max_length[255]');
+        $this->form_validation->set_rules('email','Email','required|max_length[50]');
+        $_SESSION['errormsg'] = 0;
+
+        if($this->form_validation->run())     
+        {   
+            $params = array(
+                'apid' => $this->input->post('userPassword'),
+                'email' => $this->input->post('email'),);
+            $login = $this->Applicant_model->get_user($params); 
+            if($params['apid'] != $login['apid'] ){
+                $this->session->set_flashdata('err_message', 'Invalid Email or APID!');
+                $data = array('error' => 'Invalid Email or APID!');
+                // $this->load->view('landing_page/faculty', $data);
+            }
+            else {
+                    $newdata = array( 
+                        'apid'  => $login['apid'],
+                        'email'  => $login['email'], 
+                        'logged_in' => TRUE
+                     );  
+                     $this->session->set_userdata($newdata);
+
+                    $idnum = $login['apid'];
+                    redirect("landing_page/appindex/$idnum");
+                    // $usertype = $login['userTypeID'];  
+                    // $result = $this->Landing_Page_model->validate($idnum);
+            }
+        }
+        $data['_view'] = 'landing_page/applicant';
+        $this->load->view('landing_page/applicant', $data);
+        session_destroy();
+    }
+    function signout()
+    {
+        session_destroy();
+        redirect(site_url().'landing_page/index');
     }
 
     function registrar()
@@ -578,6 +585,105 @@ class Landing_Page extends CI_Controller{
     function seced_science()
     {
         $this->load->view('landing_page/BA Secondary Ed - Science.html');
+    }
+
+    function appindex($apid)
+    {
+
+        $data['applicant'] = $this->Applicant_model->get_mo($apid);
+
+        $this->load->view('application/index',$data);
+    }
+
+
+    
+    function appedit($apid)
+    {
+        // check if the applicant exists before trying to edit it
+        $data['applicant'] = $this->Applicant_model->get_applicant($apid);
+
+        if(isset($data['applicant']['apid']))
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
+            $this->form_validation->set_rules('apln','Last Name','required|max_length[50]');
+            $this->form_validation->set_rules('apmn','Middle Name','required|max_length[50]');
+            $this->form_validation->set_rules('courseID','Course','required|max_length[50]');
+            $this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email');
+            $this->form_validation->set_rules('mobile','Mobile','required|max_length[15]');
+            $this->form_validation->set_rules('birthdate','Birth date','required');
+            $this->form_validation->set_rules('age','Age','required');
+            $this->form_validation->set_rules('birthplace','Birthplace','required|max_length[150]');
+            $this->form_validation->set_rules('gender','Gender','required|max_length[20]');
+            $this->form_validation->set_rules('civstat','Civstat','required|max_length[20]');
+            $this->form_validation->set_rules('nationality','Nationality','required|max_length[20]');
+            $this->form_validation->set_rules('religion','Religion','required|max_length[20]');
+            $this->form_validation->set_rules('addcity','City Address','required|max_length[150]');
+            $this->form_validation->set_rules('elemschool','Elementary','required|max_length[50]');
+            $this->form_validation->set_rules('secschool','Secondary','required|max_length[50]');
+            $this->form_validation->set_rules('tertschool','Tertiary','required|max_length[50]');
+            $this->form_validation->set_rules('reasonleave','Reason for Leaving','required|max_length[150]');
+            $this->form_validation->set_rules('guardianame','Guardian name','max_length[50]');
+            $this->form_validation->set_rules('relationship','Relationship','max_length[20]');
+            $this->form_validation->set_rules('fathername','Father Name','required|max_length[50]');
+            $this->form_validation->set_rules('fatherocc','Father Occupation','required|max_length[50]');
+            $this->form_validation->set_rules('mothername','Mother name','required|max_length[50]');
+            $this->form_validation->set_rules('motherocc','Mother Occupation','required|max_length[50]');
+            $this->form_validation->set_rules('studentstat','Student Status ','required|max_length[20]');
+            $this->form_validation->set_rules('status','Status','required|max_length[20]');
+
+            if($this->form_validation->run())
+            {
+
+                $params = array(
+                    'courseID' => $this->input->post('courseID'),
+                    'studentstat' => $this->input->post('studentstat'),
+                    'status' => $this->input->post('status'),
+                    'apfn' => $this->input->post('apfn'),
+                    'apln' => $this->input->post('apln'),
+                    'apmn' => $this->input->post('apmn'),
+                    'email' => $this->input->post('email'),
+                    'mobile' => $this->input->post('mobile'),
+                    'birthdate' => $this->input->post('birthdate'),
+                    'age' => $this->input->post('age'),
+                    'birthplace' => $this->input->post('birthplace'),
+                    'gender' => $this->input->post('gender'),
+                    'civstat' => $this->input->post('civstat'),
+                    'nationality' => $this->input->post('nationality'),
+                    'religion' => $this->input->post('religion'),
+                    'addcity' => $this->input->post('addcity'),
+                    'addprov' => $this->input->post('addprov'),
+                    'elemschool' => $this->input->post('elemschool'),
+                    'secschool' => $this->input->post('secschool'),
+                    'tertschool' => $this->input->post('tertschool'),
+                    'reasonleave' => $this->input->post('reasonleave'),
+                    'guardianame' => $this->input->post('guardianame'),
+                    'relationship' => $this->input->post('relationship'),
+                    'fathername' => $this->input->post('fathername'),
+                    'fatherocc' => $this->input->post('fatherocc'),
+                    'mothername' => $this->input->post('mothername'),
+                    'motherocc' => $this->input->post('motherocc'),
+                    'datemodified' => date('Y-m-d H:i:s'),
+
+                );
+
+                $this->Applicant_model->update_applicant($apid,$params);
+                $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Edited Applicant',
+                    );
+                $this->Auditlog_model->add_auditlog($paramsaudit);
+                redirect('application/index');
+            }
+            else
+            {
+                $this->load->view('application/edit',$data);
+            }
+        }
+        else
+            show_error('The applicant you are trying to edit does not exist.');
     }
 
 }

@@ -6,6 +6,7 @@ class Reg_Applicant extends CI_Controller{
         parent::__construct();
         $this->load->model('Applicant_model');
         $this->load->model('Auditlog_model');
+
     }
 
     /*
@@ -341,6 +342,42 @@ class Reg_Applicant extends CI_Controller{
         }
         else
             show_error('The applicant you are trying to delete does not exist.');
+    }
+    function email($apid)
+    {
+        // check if the applicant exists before trying to edit it
+        $data['applicant'] = $this->Applicant_model->get_applicant($apid);
+
+        if(isset($data['applicant']['apid']))
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('apfn','First Name','required|max_length[50]');
+            $this->form_validation->set_rules('apln','Last Name','required|max_length[50]');
+            $this->form_validation->set_rules('apmn','Middle Name','required|max_length[50]');
+            $this->form_validation->set_rules('courseID','Course','required|max_length[50]');
+            $this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email');
+            $this->form_validation->set_rules('mobile','Mobile','required|max_length[15]');
+            $this->form_validation->set_rules('schedule','Schedule','required');
+            if($this->form_validation->run())
+            {
+
+                $idnum = $this->session->userdata('userIDNo');
+                    $paramsaudit = array(
+                        'userIDNo' => $idnum,
+                        'auditDesc' => 'Successfully edited an applicant',
+                );
+                $this->Auditlog_model->add_auditlog($paramsaudit);
+                redirect('reg_applicant/index');
+            }
+            else
+            {
+                $data['_view'] = 'registrar_page/applicant/email';
+                $this->load->view('layouts/reg',$data);
+            }
+        }
+        else
+            show_error('The applicant you are trying to edit does not exist.');
     }
 
 }
